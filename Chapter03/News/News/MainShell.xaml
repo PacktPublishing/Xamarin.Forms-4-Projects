@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="News.MainShell"
+       xmlns:views="clr-namespace:News.Views">
+
+    <FlyoutItem Title="Home" Route="home" Icon="{StaticResource HomeIcon}">
+        <ShellContent ContentTemplate="{DataTemplate views:HeadlinesView}" Title="Headlines"
+                      Icon="{StaticResource HeadlinesIcon}" />
+
+        <Tab Title="News" Route="news" Icon="{StaticResource NewsIcon}">
+            <ShellContent Title="Local" Route="ducklocal" >
+                <ShellContent.ContentTemplate>
+                    <DataTemplate>
+                        <views:HeadlinesView>
+                            <x:Arguments>
+                                <x:String>Local</x:String>
+                            </x:Arguments>
+                        </views:HeadlinesView>
+                    </DataTemplate>
+                 </ShellContent.ContentTemplate>
+                </ShellContent>
+
+            <ShellContent Title="Global"
+                          Route="duckglobal">
+
+                <ShellContent.ContentTemplate>
+                    <DataTemplate>
+                        <views:HeadlinesView>
+                            <x:Arguments>
+                                <x:String>Global</x:String>
+                            </x:Arguments>
+                        </views:HeadlinesView>
+                    </DataTemplate>
+                 </ShellContent.ContentTemplate>
+
+            </ShellContent>
+        </Tab>
+        
+    </FlyoutItem>
+
+     <FlyoutItem Title="Settings" Icon="{StaticResource SettingsIcon}">
+        <ContentPage Title="Settings">
+            <StackLayout Margin="20">
+                <Label Text="Placeholder for settings" FontSize="Caption" />
+                <Label Text="Add controls here" FontSize="Body" />
+            </StackLayout>
+        </ContentPage>
+    </FlyoutItem>
+    
+    <ShellContent ContentTemplate="{DataTemplate views:AboutView}" Title="About" Icon="{StaticResource AboutIcon}" />
+</Shell>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="News.Views.ArticleItem">
+    <ContentView.Content>
+        <Grid  Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="15" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="1" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="65" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Text="{Binding Title}"
+                   Padding="10,0"
+                   Grid.Row="1"
+                   Grid.Column="1"
+                   FontSize="Medium"
+                   FontAttributes="Bold"/>
+
+            <Label Text="{Binding PublishedAt, StringFormat='{0:MMMM d, yyyy}'}"
+                   Padding="10"
+                   Grid.Column="1"
+                   Grid.Row="2"
+                   FontSize="Small" />
+
+            <Frame Grid.Row="1"
+                   Grid.RowSpan="2"
+                   CornerRadius="15"
+                   Padding="0"
+                   BackgroundColor="#667788"
+                   IsClippedToBounds="True">
+
+                <Image Source="{Binding UrlToImage}"
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center" />
+            </Frame>
+
+            <BoxView BackgroundColor="LightGray" Grid.Row="4" Grid.ColumnSpan="2" />
+        </Grid>
+    </ContentView.Content>
+</ContentView>

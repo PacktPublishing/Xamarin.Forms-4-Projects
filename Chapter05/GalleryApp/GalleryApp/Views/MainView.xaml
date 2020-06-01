@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:GalleryApp.Converters"
+             x:Class="GalleryApp.Views.MainView" Title="My photos">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BytesToImageConverter x:Key="ToImage" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <CarouselView ItemsSource="{Binding Recent}">
+            <CarouselView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" SnapPointsAlignment="Start" SnapPointsType="Mandatory" />
+            </CarouselView.ItemsLayout>
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding Bytes, Converter={StaticResource ToImage}}" Aspect="AspectFill" />
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
+        <StackLayout Grid.Row="1">
+            <Label Margin="10" Text="Favorites" FontSize="Subtitle" FontAttributes="Bold" />
+            <CarouselView ItemsSource="{Binding Favorites}" PeekAreaInsets="0,0,40,0" IndicatorView="Indicator">
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" SnapPointsAlignment="Start" SnapPointsType="MandatorySingle" />
+                </CarouselView.ItemsLayout>
+                <CarouselView.EmptyViewTemplate>
+                    <DataTemplate>
+                        <Label Text="No favorites selected" />
+                    </DataTemplate>
+                </CarouselView.EmptyViewTemplate>
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding Bytes, Converter={StaticResource ToImage}}" Aspect="AspectFill" />
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+
+            <IndicatorView x:Name="Indicator" HorizontalOptions="Center" SelectedIndicatorColor="Red" IndicatorColor="LightGray" />
+        </StackLayout>
+    </Grid>
+</ContentPage>

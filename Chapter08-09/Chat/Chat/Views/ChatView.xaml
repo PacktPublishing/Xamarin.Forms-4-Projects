@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:selectors="clr-namespace:Chat.Selectors" 
+             xmlns:converters="clr-namespace:Chat.Converters" 
+             x:Class="Chat.Views.ChatView">
+    <ContentPage.Resources>
+        <selectors:ChatMessageSelector x:Key="SelectMessageTemplate" />
+        <converters:Base64ToImageConverter x:Key="ToImage" />
+    </ContentPage.Resources>
+  <ScrollView>
+      <ScrollView.Orientation>
+          <OnPlatform x:TypeArguments="ScrollOrientation">
+              <On Platform="iOS" Value="Vertical" />
+              <On Platform="Android" Value="Neither" />
+          </OnPlatform>
+      </ScrollView.Orientation>
+        <Grid x:Name="MainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="1" />
+                <RowDefinition>
+                    <RowDefinition.Height>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="iOS" Value="50" />
+                            <On Platform="Android" Value="100" />
+                        </OnPlatform>
+                    </RowDefinition.Height>
+                </RowDefinition>
+            </Grid.RowDefinitions>
+
+            <CollectionView x:Name="MessageList" ItemsSource="{Binding Messages}" 
+          ItemTemplate="{StaticResource SelectMessageTemplate}">
+                <CollectionView.Resources>
+                    <ResourceDictionary>
+                        <DataTemplate x:Key="SimpleText">
+                            <Grid Padding="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Frame StyleClass="remoteMessage" HasShadow="false">
+                                    <StackLayout>
+                                        <Label Text="{Binding Username}" StyleClass="chatHeader" />
+                                        <Label Text="{Binding Text}" StyleClass="chatText" />
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+
+                        <DataTemplate x:Key="LocalSimpleText">
+                            <Grid Padding="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Frame Grid.Column="1" StyleClass="localMessage" HasShadow="false">
+                                    <StackLayout>
+                                        <Label Text="{Binding Username}" StyleClass="chatHeader" />
+                                        <Label Text="{Binding Text}" StyleClass="chatText" />
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+
+                        <DataTemplate x:Key="UserConnected">
+                            <StackLayout Padding="10" BackgroundColor="#33000000" Orientation="Horizontal">
+                                <Label Text="{Binding Username}" StyleClass="chatHeader" VerticalOptions="Center" />
+                                <Label Text="connected" StyleClass="chatText" VerticalOptions="Center" />
+                            </StackLayout>
+                        </DataTemplate>
+
+                        <DataTemplate x:Key="Photo">
+                            <Grid Padding="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackLayout>
+                                    <Label Text="{Binding Username}" StyleClass="chatHeader" />
+                                    <Image Source="{Binding Url}" Aspect="AspectFill" 
+                       HeightRequest="150" HorizontalOptions="Fill" />
+                                </StackLayout>
+                            </Grid>
+                        </DataTemplate>
+
+                        <DataTemplate x:Key="LocalPhoto">
+                            <Grid Padding="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Grid.Column="1">
+                                    <Label Text="{Binding Username}" StyleClass="chatHeader" />
+                                    <Image Source="{Binding Base64Photo, Converter={StaticResource ToImage}}" 
+                       Aspect="AspectFill" HeightRequest="150" HorizontalOptions="Fill" />
+                                </StackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </ResourceDictionary>
+                </CollectionView.Resources>
+            </CollectionView>
+
+            <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="#33000000" />
+            <Grid Grid.Row="2" Padding="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="30" />
+                </Grid.ColumnDefinitions>
+
+                <Image Source="photo.png"
+             VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="30">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Photo}" />
+                    </Image.GestureRecognizers>
+                    </Image>
+
+                <Entry Text="{Binding Text}" Grid.Column="1" 
+       ReturnCommand="{Binding Send}" />
+                <Image Grid.Column="2" Source="send.png"
+             VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="30" ><Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Photo}" />
+                    </Image.GestureRecognizers>
+                    </Image>
+
+            </Grid>
+        </Grid>
+  </ScrollView>
+</ContentPage> 
