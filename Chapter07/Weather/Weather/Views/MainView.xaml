@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:Weather.Controls" 
              xmlns:behaviors="clr-namespace:Weather.Behaviors" 
              x:Class="Weather.Views.MainView" Title="{Binding City}">
     <ContentPage.ToolbarItems>
@@ -14,20 +13,20 @@
             </Image.Source>
         </Image>
         <ScrollView BackgroundColor="Transparent">
-            <controls:RepeaterView ItemsSource="{Binding Days}" Direction="Column">
-                <controls:RepeaterView.ItemsTemplate>
+            <FlexLayout  BindableLayout.ItemsSource="{Binding Days}" Direction="Column">
+                <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
-                            
-                            
+
+
                             <ContentView Padding="10" BackgroundColor="#9F5010">
                                 <Label Text="{Binding DateAsString}" TextColor="White" FontAttributes="Bold" />
                             </ContentView>
-                            <controls:RepeaterView ItemsSource="{Binding Items}" Wrap="Wrap" JustifyContent="Start" AlignItems="Start">
-                                <controls:RepeaterView.Behaviors>
-                                    <behaviors:RepeaterViewBehavior />
-                                </controls:RepeaterView.Behaviors>
-                                <controls:RepeaterView.ItemsTemplate>
+                            <FlexLayout BindableLayout.ItemsSource="{Binding Items}" Wrap="Wrap" JustifyContent="Start" AlignItems="Start">
+                                <FlexLayout.Behaviors>
+                                    <behaviors:FlexLayoutBehavior />
+                                </FlexLayout.Behaviors>
+                                <BindableLayout.ItemTemplate>
                                     <DataTemplate>
                                         <StackLayout Margin="10" Padding="20" WidthRequest="150" BackgroundColor="#99FFFFFF">
                                             <VisualStateManager.VisualStateGroups>
@@ -67,12 +66,12 @@
                                             <Label FontSize="14" FontAttributes="Bold" Text="{Binding Description}" HorizontalOptions="Center" />
                                         </StackLayout>
                                     </DataTemplate>
-                                </controls:RepeaterView.ItemsTemplate>
-                            </controls:RepeaterView>
+                                </BindableLayout.ItemTemplate>
+                            </FlexLayout>
                         </StackLayout>
                     </DataTemplate>
-                </controls:RepeaterView.ItemsTemplate>
-            </controls:RepeaterView>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
         </ScrollView>
         <Frame IsVisible="{Binding IsRefreshing}" BackgroundColor="#99FFFFFF" WidthRequest="100" HeightRequest="100" VerticalOptions="Center" HorizontalOptions="Center">
             <ActivityIndicator Color="Black" IsRunning="True" />
