@@ -8,7 +8,7 @@ namespace News
             get
             {
                 // todo remove before push to Packt
-                return "142b30001ea949fa8cb10e0f7cb4c463";
+                return "<Your API Key>";
             }
         }
     }
